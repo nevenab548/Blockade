@@ -7,3 +7,4 @@ class Player:
         self.pawn_one_position = [4, 4] if self.player_color == "black" else [4, 11]
         self.pawn_two_position = [8, 4] if self.player_color == "black" else [8, 11]
         self.available_walls = (n - m) * 3  # na pocetku igre svako ima po 9-18 zidova, smanjuje se kad se postavi
+        self.symbol = "X" if self.player_color == "black" else "O"
