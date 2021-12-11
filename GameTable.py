@@ -5,11 +5,11 @@ from Field import *
 
 class GameTable:
 
-    def __init__(self, m, n):
+    def __init__(self, m, n, player_one, player_two):
         self.m = m
         self.n = n
-        self.player_one = Player(self.m, self.n, "black")
-        self.player_two = Player(self.m, self.n, "white")
+        self.player_one = player_one
+        self.player_two = player_two
         self.matrix = [[Field() for x in range(n)] for y in range(m)]
         # self.set_fields()
 
@@ -36,6 +36,7 @@ class GameTable:
         print(" ", end="")
         for i in range(0, self.n):
             print(' {:X}'.format(i + 1), end="")
+        print(" ")
 
     def set_fields(self):
         for i in range(0, self.m):
@@ -46,9 +47,8 @@ class GameTable:
                     self.matrix[i][j].set_left_wall(1)
                 if j == self.n - 1:
                     self.matrix[i][j].set_right_wall(1)
+                if (i == 3 and j == 3) or (i == 3 and j == 10):
+                    self.matrix[i][j].value = "X"
+                if (i == 7 and j == 3) or (i == 7 and j == 10):
+                    self.matrix[i][j].value = "O"
 
-# kada se promeni zid na jedan element mora se proveriti zid njegovog suseda, npr polje ima zid levo sused za desni vrednost tog zida
-
-# za stampanje dve petlje: ako je i parno svi zidovi, ako je neparno bez gornjeg i donjeg
-# ako je j neparno svi zidovi, ako je parno bez levog i desnog
-# ako su granicna polja granicni zidovi da budu dupli
