@@ -1,6 +1,3 @@
-from Wall import *
-
-
 class Field:
 
     def __init__(self):
