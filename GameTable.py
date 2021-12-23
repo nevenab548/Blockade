@@ -55,7 +55,6 @@ class GameTable:
 
     def make_move(self, move):
         arr = list(move)
-        print(arr)
         if arr[1] == "X":
             if arr[3] == "1":
                 self.player_one.pawn_one_position = [int(arr[7]) - 1, int(arr[9]) - 1]
@@ -64,35 +63,52 @@ class GameTable:
                 if arr[13] == 'B':
                     self.matrix[int(arr[15]) - 1][int(arr[17]) - 1].set_lower_wall(1)
                     self.matrix[int(arr[15]) - 1][int(arr[17])].set_lower_wall(1)
+                    self.matrix[int(arr[15])][int(arr[17]) - 1].set_upper_wall(1)
+                    self.matrix[int(arr[15])][int(arr[17])].set_upper_wall(1)
                 else:
                     self.matrix[int(arr[15]) - 1][int(arr[17]) - 1].set_right_wall(1)
                     self.matrix[int(arr[15])][int(arr[17]) - 1].set_right_wall(1)
+                    self.matrix[int(arr[15]) - 1][int(arr[17])].set_left_wall(1)
+                    self.matrix[int(arr[15])][int(arr[17])].set_left_wall(1)
+
             else:
                 self.player_one.pawn_two_position = [int(arr[7]) - 1, int(arr[9]) - 1]
                 if arr[13] == 'B':
                     self.matrix[int(arr[15]) - 1][int(arr[17]) - 1].set_lower_wall(1)
                     self.matrix[int(arr[15]) - 1][int(arr[17])].set_lower_wall(1)
+                    self.matrix[int(arr[15])][int(arr[17]) - 1].set_upper_wall(1)
+                    self.matrix[int(arr[15])][int(arr[17])].set_upper_wall(1)
                 else:
                     self.matrix[int(arr[15]) - 1][int(arr[17]) - 1].set_right_wall(1)
                     self.matrix[int(arr[15])][int(arr[17]) - 1].set_right_wall(1)
+                    self.matrix[int(arr[15]) - 1][int(arr[17])].set_left_wall(1)
+                    self.matrix[int(arr[15])][int(arr[17])].set_left_wall(1)
             self.player_one.available_walls = self.player_one.available_walls - 1
         else:
             if arr[3] == "1":
-                self.player_two.pawn_one_position = [int(arr[7]) - 1, int(arr[9]) - 1]
+                self.player_two.pawn_one_position = [int(arr[7], 16) - 1, int(arr[9], 16) - 1]
                 if self.player_two.available_walls == 0:
                     return
                 if arr[13] == 'B':
-                    self.matrix[int(arr[15]) - 1][int(arr[17]) - 1].set_lower_wall(1)
-                    self.matrix[int(arr[15]) - 1][int(arr[17])].set_lower_wall(1)
+                    self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_lower_wall(1)
+                    self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_lower_wall(1)
+                    self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_upper_wall(1)
+                    self.matrix[int(arr[15], 16)][int(arr[17], 16)].set_upper_wall(1)
                 else:
-                    self.matrix[int(arr[15]) - 1][int(arr[17]) - 1].set_right_wall(1)
-                    self.matrix[int(arr[15])][int(arr[17]) - 1].set_right_wall(1)
+                    self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_right_wall(1)
+                    self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_right_wall(1)
+                    self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_left_wall(1)
+                    self.matrix[int(arr[15], 16)][int(arr[17], 16)].set_left_wall(1)
             else:
-                self.player_two.pawn_two_position = [int(arr[7]) - 1, int(arr[9]) - 1]
+                self.player_two.pawn_two_position = [int(arr[7], 16) - 1, int(arr[9], 16) - 1]
                 if arr[13] == 'B':
-                    self.matrix[int(arr[15]) - 1][int(arr[17]) - 1].set_lower_wall(1)
-                    self.matrix[int(arr[15]) - 1][int(arr[17])].set_lower_wall(1)
+                    self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_lower_wall(1)
+                    self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_lower_wall(1)
+                    self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_upper_wall(1)
+                    self.matrix[int(arr[15], 16)][int(arr[17], 16)].set_upper_wall(1)
                 else:
-                    self.matrix[int(arr[15]) - 1][int(arr[17]) - 1].set_right_wall(1)
-                    self.matrix[int(arr[15])][int(arr[17]) - 1].set_right_wall(1)
+                    self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_right_wall(1)
+                    self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_right_wall(1)
+                    self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_left_wall(1)
+                    self.matrix[int(arr[15], 16)][int(arr[17], 16)].set_left_wall(1)
             self.player_two.available_walls = self.player_one.available_walls - 1

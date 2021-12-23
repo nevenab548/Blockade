@@ -25,6 +25,15 @@ class Field:
     def get_lower_wall(self):
         return self.lower_wall
 
+    def get_left_wall(self):
+        return self.left_wall
+
+    def get_upper_wall(self):
+        return self.upper_wall
+
+    def get_right_wall(self):
+        return self.right_wall
+
     def print(self, j):
         if j == 0:
             print("|" if self.left_wall == 0 else "∥", end="")
