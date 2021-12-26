@@ -42,6 +42,8 @@ class GameTable:
                     self.matrix[i][j].set_lower_wall(1)
                 if j == 0:
                     self.matrix[i][j].set_left_wall(1)
+                if i == 0:
+                    self.matrix[i][j].set_upper_wall(1)
                 if j == self.n - 1:
                     self.matrix[i][j].set_right_wall(1)
                 if ([i, j] == [self.player_one.pawn_one_position[0] - 1, self.player_one.pawn_one_position[1] - 1]) or (

@@ -65,10 +65,11 @@ class Main:
         while self.is_move_valid(move) is False or self.is_move_legal(move) is False:
             move = input("Enter a move: ")
         self.table.make_move(move)
-        if self.player_one.player_turn is True:
-            self.possible_moves(self.player_one)
-        else:
-            self.possible_moves(self.player_two)
+        self.graph = Graph(self.table)
+        # if self.player_one.player_turn is True:
+        #     self.possible_moves(self.player_one)
+        # else:
+        #     self.possible_moves(self.player_two)
 
     def is_move_valid(self, move):
         reg = re.compile('\[[XO] [12]] \[[A-Fa-f0-9]+ [A-Fa-f0-9]+] \[[BG] \d \d]')
@@ -81,7 +82,7 @@ class Main:
         arr = list(move)
         move_cor = [int(arr[7], 16) - 1, int(arr[9], 16) - 1]
         wall_cor = [int(arr[15], 16) - 1, int(arr[17], 16) - 1]
-        if arr[1] == 'X' and self.player_one.player_turn is True:
+        if arr[1] == 'X' :#and self.player_one.player_turn is True:
             if arr[3] == '1':
                 if is_okay_position(self.player_one.pawn_one_position, move_cor) is True and self.is_okay_wall(
                         arr[13], wall_cor) is True \
@@ -92,7 +93,7 @@ class Main:
                         arr[13], wall_cor) is True \
                         and self.check_if_goal_is_not_blocked(self.player_two, wall_cor, arr[13]) is True:
                     return True
-        elif arr[1] == 'O' and self.player_two.player_turn is True:
+        elif arr[1] == 'O': #and self.player_two.player_turn is True:
             if arr[3] == '1':
                 if is_okay_position(self.player_two.pawn_one_position, move_cor) is True and self.is_okay_wall(
                         arr[13], wall_cor) is True \
@@ -170,6 +171,8 @@ class Main:
         self.starting_state()
         while self.is_it_end():
             self.show_table()
+            print(self.graph.vertices)
+            print(self.table.matrix)
             self.make_move()
             if self.player_one.player_turn is True:
                 self.player_one.player_turn = False
@@ -190,11 +193,11 @@ class Main:
             return False
         return True
 
-    def possible_moves(self, player):
-        self.possible_moves_one = self.graph.find_paths(player.pawn_one_position, 1) + self.graph.find_paths(
-            player.pawn_one_position, 2)
-        self.possible_moves_two = self.graph.find_paths(player.pawn_two_position, 1) + self.graph.find_paths(
-            player.pawn_two_position, 2)
+    #def possible_moves(self, player):
+        #self.possible_moves_one = self.graph.find_paths(player.pawn_one_position, 1) + self.graph.find_paths(
+        #    player.pawn_one_position, 2)
+        #self.possible_moves_two = self.graph.find_paths(player.pawn_two_position, 1) + self.graph.find_paths(
+         #   player.pawn_two_position, 2)
 
 
 game = Main()
