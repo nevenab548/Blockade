@@ -82,7 +82,7 @@ class Graph:
 
     def find_paths(self, start, length):
         paths = []
-        queue = [[start]]
+        queue = [[start[0]*self.table.m+start[1]]]
 
         while queue:
             curr, *queue = queue
