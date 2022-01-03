@@ -5,6 +5,32 @@ from GameTable import *
 from Graph import *
 from Player import *
 
+#Izgenerisati za svaki moguci potez u stablu moguve poteze, tako se pravi stablo
+#Hardcoded na jedan dubina, moguca izmena na dalje
+def minmax_alphabeta(node, depth, alpha, beta, maximizingPlayer): #b +inf a -inf
+
+    if depth == 0 or node.position == 0:
+        return node.value
+
+    if maximizingPlayer is True:
+        for child in node:
+            alpha = alpha if alpha > minmax_alphabeta(child, depth - 1, alpha, beta,
+                                                      not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
+                                                                                                  alpha, beta,
+                                                                                                  not maximizingPlayer)
+            if beta <= alpha:
+                break
+        return alpha
+    else:
+        for child in node:
+            beta = beta if beta < minmax_alphabeta(child, depth - 1, alpha, beta,
+                                                   not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
+                                                                                               alpha, beta,
+                                                                                               not maximizingPlayer)
+            if beta <= alpha:
+                break
+        return beta
+
 
 def is_okay_position(player_pos, move_pos):
     if player_pos == move_pos:
@@ -80,7 +106,7 @@ class Main:
         if move == "":
             return False
         arr = list(move)
-        move_cor = [int(arr[7], 16) - 1, int(arr[9], 16) - 1]
+        move_cor = [int(arr[7], 16), int(arr[9], 16)]
         wall_cor = [int(arr[15], 16) - 1, int(arr[17], 16) - 1]
         if arr[1] == 'X' and self.player_one.player_turn is True:
             if arr[3] == '1':
