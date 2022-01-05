@@ -90,5 +90,5 @@ class Graph:
                 if n not in curr and len(curr) <= length:
                     queue += [curr + [n[0] * self.table.m + n[1]]]
                     if length == len(curr):
-                        paths += [curr + [n[0] + 1, n[1] + 1]]
+                        paths += [[n[0] + 1, n[1] + 1]]
         return paths

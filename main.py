@@ -6,11 +6,30 @@ from Graph import *
 from Player import *
 
 
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
+def array_to_bst(array_nums):
+    if not array_nums:
+        return None
+    tree = []
+    mid_num = len(array_nums) // 2
+    node = TreeNode(array_nums[mid_num])
+    node.left = array_to_bst(array_nums[:mid_num])
+    node.right = array_to_bst(array_nums[mid_num + 1:])
+    tree.append()
+    return tree
+
+
 # Izgenerisati za svaki moguci potez u stablu moguve poteze, tako se pravi stablo
 # Hardcoded na jedan dubina, moguca izmena na dalje
 def minmax_alphabeta(node, depth, alpha, beta, maximizingPlayer):  # b +inf a -inf
 
-    if depth == 0 or node.position == 0:
+    if depth == 0 or (node.left is None and node.right is None):
         return node.value
 
     if maximizingPlayer is True:
@@ -214,7 +233,6 @@ class Main:
     def possible_moves(self, player):
         self.possible_moves_one = self.graph.find_paths(
             [player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1], 1)
-        print(self.possible_moves_one)
         self.possible_moves_two = self.graph.find_paths(
             [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], 1)
 
