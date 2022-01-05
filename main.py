@@ -5,9 +5,10 @@ from GameTable import *
 from Graph import *
 from Player import *
 
-#Izgenerisati za svaki moguci potez u stablu moguve poteze, tako se pravi stablo
-#Hardcoded na jedan dubina, moguca izmena na dalje
-def minmax_alphabeta(node, depth, alpha, beta, maximizingPlayer): #b +inf a -inf
+
+# Izgenerisati za svaki moguci potez u stablu moguve poteze, tako se pravi stablo
+# Hardcoded na jedan dubina, moguca izmena na dalje
+def minmax_alphabeta(node, depth, alpha, beta, maximizingPlayer):  # b +inf a -inf
 
     if depth == 0 or node.position == 0:
         return node.value
@@ -92,10 +93,6 @@ class Main:
             move = input("Enter a move: ")
         self.table.make_move(move)
         self.graph = Graph(self.table)
-        if self.player_one.player_turn is True:
-            self.possible_moves(self.player_one)
-        else:
-            self.possible_moves(self.player_two)
 
     def is_move_valid(self, move):
         reg = re.compile('\[[XO] [12]] \[[A-Fa-f0-9]+ [A-Fa-f0-9]+] \[[BG] \d \d]')
@@ -199,6 +196,8 @@ class Main:
             self.make_move()
             self.player_one.player_turn = not self.player_one.player_turn
             self.player_two.player_turn = not self.player_two.player_turn
+            if self.player_two.player_turn is True:
+                self.possible_moves(self.player_two)
         # ocictiti konzolu
 
     def is_it_end(self):
@@ -215,6 +214,7 @@ class Main:
     def possible_moves(self, player):
         self.possible_moves_one = self.graph.find_paths(
             [player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1], 1)
+        print(self.possible_moves_one)
         self.possible_moves_two = self.graph.find_paths(
             [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], 1)
 
