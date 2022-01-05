@@ -6,34 +6,34 @@ from Graph import *
 from Player import *
 
 
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
-
-
 def array_to_bst(array_nums):
     if not array_nums:
         return None
-    tree = []
+    # tree = []
     mid_num = len(array_nums) // 2
-    node = TreeNode(array_nums[mid_num])
-    node.left = array_to_bst(array_nums[:mid_num])
-    node.right = array_to_bst(array_nums[mid_num + 1:])
-    tree.append()
-    return tree
+    node = {'value': array_nums[mid_num], 'left': [], 'right': []}
+    node['left'].append(array_to_bst(array_nums[:mid_num]))
+    node['right'].append(array_to_bst(array_nums[mid_num + 1:]))
+    return node
 
 
 # Izgenerisati za svaki moguci potez u stablu moguve poteze, tako se pravi stablo
 # Hardcoded na jedan dubina, moguca izmena na dalje
 def minmax_alphabeta(node, depth, alpha, beta, maximizingPlayer):  # b +inf a -inf
 
-    if depth == 0 or (node.left is None and node.right is None):
-        return node.value
+    if depth == 0 or (node['left'] is None and node['right'] is None):
+        return node['value'][0] + node['value'][1]
 
     if maximizingPlayer is True:
-        for child in node:
+        for child in node['left']:
+            alpha = alpha if alpha > minmax_alphabeta(child, depth - 1, alpha, beta,
+                                                      not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
+                                                                                                  alpha, beta,
+                                                                                                  not maximizingPlayer)
+            if beta <= alpha:
+                break
+
+        for child in node['right']:
             alpha = alpha if alpha > minmax_alphabeta(child, depth - 1, alpha, beta,
                                                       not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
                                                                                                   alpha, beta,
@@ -42,7 +42,14 @@ def minmax_alphabeta(node, depth, alpha, beta, maximizingPlayer):  # b +inf a -i
                 break
         return alpha
     else:
-        for child in node:
+        for child in node['left']:
+            beta = beta if beta < minmax_alphabeta(child, depth - 1, alpha, beta,
+                                                   not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
+                                                                                               alpha, beta,
+                                                                                               not maximizingPlayer)
+            if beta <= alpha:
+                break
+        for child in node['right']:
             beta = beta if beta < minmax_alphabeta(child, depth - 1, alpha, beta,
                                                    not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
                                                                                                alpha, beta,
@@ -235,6 +242,7 @@ class Main:
             [player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1], 1)
         self.possible_moves_two = self.graph.find_paths(
             [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], 1)
+        print(minmax_alphabeta(array_to_bst(self.possible_moves_one), 2, -1000, 1000, True))
 
 
 game = Main()
