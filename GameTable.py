@@ -69,12 +69,12 @@ class GameTable:
                 self.player_one.pawn_one_position = [int(arr[7], 16), int(arr[9], 16)]
                 if self.player_one.available_walls == 0:
                     return
-                if arr[13] == 'B':
+                if len(arr) > 11 and arr[13] == 'B':
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_lower_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_lower_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_upper_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16)].set_upper_wall(1)
-                else:
+                elif len(arr) > 11:
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_right_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_right_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_left_wall(1)
@@ -83,12 +83,12 @@ class GameTable:
                 self.player_one.pawn_two_position = [int(arr[7], 16), int(arr[9], 16)]
                 if self.player_one.available_walls == 0:
                     return
-                if arr[13] == 'B':
+                if len(arr) > 11 and arr[13] == 'B':
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_lower_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_lower_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_upper_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16)].set_upper_wall(1)
-                else:
+                elif len(arr) > 11:
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_right_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_right_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_left_wall(1)
@@ -99,12 +99,12 @@ class GameTable:
                 self.player_two.pawn_one_position = [int(arr[7], 16), int(arr[9], 16)]
                 if self.player_two.available_walls == 0:
                     return
-                if arr[13] == 'B':
+                if len(arr) > 11 and arr[13] == 'B':
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_lower_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_lower_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_upper_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16)].set_upper_wall(1)
-                else:
+                elif len(arr) > 11:
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_right_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_right_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_left_wall(1)
@@ -113,12 +113,12 @@ class GameTable:
                 self.player_two.pawn_two_position = [int(arr[7], 16), int(arr[9], 16)]
                 if self.player_two.available_walls == 0:
                     return
-                if arr[13] == 'B':
+                if len(arr) > 11 and arr[13] == 'B':
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_lower_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_lower_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_upper_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16)].set_upper_wall(1)
-                else:
+                elif len(arr) > 11:
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_right_wall(1)
                     self.matrix[int(arr[15], 16)][int(arr[17], 16) - 1].set_right_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_left_wall(1)

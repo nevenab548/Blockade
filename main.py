@@ -9,7 +9,6 @@ from Player import *
 def array_to_bst(array_nums):
     if not array_nums:
         return None
-    # tree = []
     mid_num = len(array_nums) // 2
     node = {'value': array_nums[mid_num], 'left': [], 'right': []}
     node['left'].append(array_to_bst(array_nums[:mid_num]))
@@ -223,7 +222,14 @@ class Main:
             self.player_one.player_turn = not self.player_one.player_turn
             self.player_two.player_turn = not self.player_two.player_turn
             if self.player_two.player_turn is True:
-                self.possible_moves(self.player_two)
+                if self.possible_moves(self.player_two) > 0:
+                    self.table.make_move(f'[O 1] [{self.possible_moves_one[0][0]} {self.possible_moves_one[0][1]}]')
+                else:
+                    self.table.make_move(f'[O 2] [{self.possible_moves_two[0][0]} {self.possible_moves_two[0][1]}]')
+                self.player_one.player_turn = not self.player_one.player_turn
+                self.player_two.player_turn = not self.player_two.player_turn
+
+
         # ocictiti konzolu
 
     def is_it_end(self):
@@ -242,7 +248,7 @@ class Main:
             [player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1], 1)
         self.possible_moves_two = self.graph.find_paths(
             [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], 1)
-        print(minmax_alphabeta(array_to_bst(self.possible_moves_one), 2, -1000, 1000, True))
+        return (minmax_alphabeta(array_to_bst(self.possible_moves_one), 2, -1000, 1000, True))-minmax_alphabeta(array_to_bst(self.possible_moves_two), 2, -1000, 1000, True)
 
 
 game = Main()
