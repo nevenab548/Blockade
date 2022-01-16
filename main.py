@@ -191,9 +191,67 @@ class Main:
             self.player_two.player_turn = not self.player_two.player_turn
             if self.player_two.player_turn is True:
                 if self.possible_moves(self.player_two) > 0:
-                    self.table.make_move(f'[O 1] [{self.possible_moves_one[0][0]} {self.possible_moves_one[0][1]}]')
+                    move1 = \
+                        self.possible_moves_one[
+                            self.possible_moves(self.player_two) % len(self.possible_moves_one) - 1][0]
+                    move2 = \
+                        self.possible_moves_one[
+                            self.possible_moves(self.player_two) % len(self.possible_moves_one) - 1][1]
+                    print(move1)
+                    print(move2)
+                    if move1 == 10:
+                        move1 = 'A'
+                    elif move1 == 11:
+                        move1 = 'B'
+                    elif move1 == 12:
+                        move1 = 'C'
+                    elif move1 == 13:
+                        move1 = 'D'
+                    elif move1 == 14:
+                        move1 = 'E'
+
+                    if move2 == 10:
+                        move2 = 'A'
+                    elif move2 == 11:
+                        move2 = 'B'
+                    elif move2 == 12:
+                        move2 = 'C'
+                    elif move2 == 13:
+                        move2 = 'D'
+                    elif move2 == 14:
+                        move2 = 'E'
+
+                    self.table.make_move(f'[O 1] [{move1} {move2}] [B 1 1]')
                 else:
-                    self.table.make_move(f'[O 2] [{self.possible_moves_two[0][0]} {self.possible_moves_two[0][1]}]')
+                    move1 = \
+                        self.possible_moves_two[
+                            self.possible_moves(self.player_two) % len(self.possible_moves_two) - 1][0]
+                    move2 = \
+                        self.possible_moves_two[
+                            self.possible_moves(self.player_two) % len(self.possible_moves_two) - 1][1]
+                    if move1 == 10:
+                        move1 = 'A'
+                    elif move1 == 11:
+                        move1 = 'B'
+                    elif move1 == 12:
+                        move1 = 'C'
+                    elif move1 == 13:
+                        move1 = 'D'
+                    elif move1 == 14:
+                        move1 = 'E'
+
+                    if move2 == 10:
+                        move2 = 'A'
+                    elif move2 == 11:
+                        move2 = 'B'
+                    elif move2 == 12:
+                        move2 = 'C'
+                    elif move2 == 13:
+                        move2 = 'D'
+                    elif move2 == 14:
+                        move2 = 'E'
+
+                    self.table.make_move(f'[O 2] [{move1} {move2}] [G 5 5]')
                 self.player_one.player_turn = not self.player_one.player_turn
                 self.player_two.player_turn = not self.player_two.player_turn
 
@@ -220,7 +278,7 @@ class Main:
     def minmax_alphabeta(self, node, depth, alpha, beta, maximizingPlayer):  # b +inf a -inf
 
         if depth == 0 or (node['left'] is None and node['right'] is None):
-            print(self.heuristic(node))
+            #print(self.heuristic(node))
             return self.heuristic(node)
 
         if maximizingPlayer is True:
