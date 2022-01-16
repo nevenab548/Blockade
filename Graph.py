@@ -23,7 +23,7 @@ class Graph:
                              or self.table.matrix[i - 1][j].get_upper_wall() == 1):
                     self.vertices[k].append([(i - 2), j])
                 if in_bounds(self.table.m, self.table.n, i - 1, j) and \
-                        self.table.matrix[i - 1][j].get_upper_wall() == 0:
+                        self.table.matrix[i][j].get_upper_wall() == 0:
                     self.vertices[k].append([(i - 1), j])
                 if in_bounds(self.table.m, self.table.n, i - 1, j + 1) and \
                         not (self.table.matrix[i][j].get_upper_wall() == 1

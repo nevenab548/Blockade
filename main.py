@@ -1,7 +1,5 @@
-from importlib import reload
-
 import re
-from GameTable import *
+
 from Graph import *
 from Player import *
 
@@ -14,48 +12,6 @@ def array_to_bst(array_nums):
     node['left'].append(array_to_bst(array_nums[:mid_num]))
     node['right'].append(array_to_bst(array_nums[mid_num + 1:]))
     return node
-
-
-# Izgenerisati za svaki moguci potez u stablu moguve poteze, tako se pravi stablo
-# Hardcoded na jedan dubina, moguca izmena na dalje
-def minmax_alphabeta(node, depth, alpha, beta, maximizingPlayer):  # b +inf a -inf
-
-    if depth == 0 or (node['left'] is None and node['right'] is None):
-        return node['value'][0] + node['value'][1]
-
-    if maximizingPlayer is True:
-        for child in node['left']:
-            alpha = alpha if alpha > minmax_alphabeta(child, depth - 1, alpha, beta,
-                                                      not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
-                                                                                                  alpha, beta,
-                                                                                                  not maximizingPlayer)
-            if beta <= alpha:
-                break
-
-        for child in node['right']:
-            alpha = alpha if alpha > minmax_alphabeta(child, depth - 1, alpha, beta,
-                                                      not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
-                                                                                                  alpha, beta,
-                                                                                                  not maximizingPlayer)
-            if beta <= alpha:
-                break
-        return alpha
-    else:
-        for child in node['left']:
-            beta = beta if beta < minmax_alphabeta(child, depth - 1, alpha, beta,
-                                                   not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
-                                                                                               alpha, beta,
-                                                                                               not maximizingPlayer)
-            if beta <= alpha:
-                break
-        for child in node['right']:
-            beta = beta if beta < minmax_alphabeta(child, depth - 1, alpha, beta,
-                                                   not maximizingPlayer) else minmax_alphabeta(child, depth - 1,
-                                                                                               alpha, beta,
-                                                                                               not maximizingPlayer)
-            if beta <= alpha:
-                break
-        return beta
 
 
 def is_okay_position(player_pos, move_pos):
@@ -129,6 +85,18 @@ class Main:
             return False
         arr = list(move)
         move_cor = [int(arr[7], 16), int(arr[9], 16)]
+        if arr[1] == 'X' and arr[3] == '1':
+            player_moves = self.graph.find_paths(
+                [self.player_one.pawn_one_position[0] - 1, self.player_one.pawn_one_position[1] - 1], 1)
+            if move_cor not in player_moves:
+                print("Izdat nelegalan potez")
+                return False
+        elif arr[1] == 'X':
+            player_moves = self.graph.find_paths(
+                [self.player_one.pawn_two_position[0] - 1, self.player_one.pawn_two_position[1] - 1], 1)
+            if move_cor not in player_moves:
+                print("Izdat nelegalan potez")
+                return False
         wall_cor = [int(arr[15], 16) - 1, int(arr[17], 16) - 1]
         if arr[1] == 'X' and self.player_one.player_turn is True:
             if arr[3] == '1':
@@ -229,9 +197,6 @@ class Main:
                 self.player_one.player_turn = not self.player_one.player_turn
                 self.player_two.player_turn = not self.player_two.player_turn
 
-
-        # ocictiti konzolu
-
     def is_it_end(self):
         if self.player_one.pawn_one_position == [7, 3] or self.player_one.pawn_one_position == [7, 10]:
             return False
@@ -248,7 +213,66 @@ class Main:
             [player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1], 1)
         self.possible_moves_two = self.graph.find_paths(
             [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], 1)
-        return (minmax_alphabeta(array_to_bst(self.possible_moves_one), 2, -1000, 1000, True))-minmax_alphabeta(array_to_bst(self.possible_moves_two), 2, -1000, 1000, True)
+        return (self.minmax_alphabeta(array_to_bst(self.possible_moves_one), 2, -1000, 1000,
+                                      True)) - self.minmax_alphabeta(
+            array_to_bst(self.possible_moves_two), 2, -1000, 1000, True)
+
+    def minmax_alphabeta(self, node, depth, alpha, beta, maximizingPlayer):  # b +inf a -inf
+
+        if depth == 0 or (node['left'] is None and node['right'] is None):
+            print(self.heuristic(node))
+            return self.heuristic(node)
+
+        if maximizingPlayer is True:
+            for child in node['left']:
+                alpha = alpha if alpha > self.minmax_alphabeta(child, depth - 1, alpha, beta,
+                                                               not maximizingPlayer) else self.minmax_alphabeta(child,
+                                                                                                                depth - 1,
+                                                                                                                alpha,
+                                                                                                                beta,
+                                                                                                                not maximizingPlayer)
+                if beta <= alpha:
+                    break
+
+            for child in node['right']:
+                alpha = alpha if alpha > self.minmax_alphabeta(child, depth - 1, alpha, beta,
+                                                               not maximizingPlayer) else self.minmax_alphabeta(child,
+                                                                                                                depth - 1,
+                                                                                                                alpha,
+                                                                                                                beta,
+                                                                                                                not maximizingPlayer)
+                if beta <= alpha:
+                    break
+            return alpha
+        else:
+            for child in node['left']:
+                beta = beta if beta < self.minmax_alphabeta(child, depth - 1, alpha, beta,
+                                                            not maximizingPlayer) else self.minmax_alphabeta(child,
+                                                                                                             depth - 1,
+                                                                                                             alpha,
+                                                                                                             beta,
+                                                                                                             not maximizingPlayer)
+                if beta <= alpha:
+                    break
+            for child in node['right']:
+                beta = beta if beta < self.minmax_alphabeta(child, depth - 1, alpha, beta,
+                                                            not maximizingPlayer) else self.minmax_alphabeta(child,
+                                                                                                             depth - 1,
+                                                                                                             alpha,
+                                                                                                             beta,
+                                                                                                             not maximizingPlayer)
+                if beta <= alpha:
+                    break
+            return beta
+
+    def heuristic(self, node):
+        node_val = node['value'][0] * self.table.n + node['value'][1]
+        pawn_one = 3 * self.table.n + 3
+        pawn_two = 3 * self.table.n + 10
+        if node_val - pawn_one > node_val - pawn_two:
+            return node_val - pawn_two
+        else:
+            return node_val - pawn_one
 
 
 game = Main()
