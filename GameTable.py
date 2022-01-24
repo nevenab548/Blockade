@@ -64,7 +64,6 @@ class GameTable:
         if move == "":
             return
         arr = list(move)
-        print(arr)
         if arr[1] == "X":
             if arr[3] == "1":
                 self.player_one.pawn_one_position = [int(arr[7], 16), int(arr[9], 16)]
@@ -114,7 +113,6 @@ class GameTable:
                 self.player_two.pawn_two_position = [int(arr[7], 16), int(arr[9], 16)]
                 if self.player_two.available_walls == 0:
                     return
-                print(arr)
                 if len(arr) > 11 and arr[13] == 'B':
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16) - 1].set_lower_wall(1)
                     self.matrix[int(arr[15], 16) - 1][int(arr[17], 16)].set_lower_wall(1)

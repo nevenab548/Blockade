@@ -213,8 +213,6 @@ class Main:
                     move2 = \
                         self.possible_moves_one[
                             self.possible_moves(self.player_two) % len(self.possible_moves_one) - 1][1]
-                    print(move1)
-                    print(move2)
                     if move1 == 10:
                         move1 = 'A'
                     elif move1 == 11:
@@ -294,7 +292,6 @@ class Main:
     def minmax_alphabeta(self, node, depth, alpha, beta, maximizingPlayer):  # b +inf a -inf
 
         if depth == 0 or (node['left'] is None and node['right'] is None):
-            #print(self.heuristic(node))
             return self.heuristic(node)
 
         if maximizingPlayer is True:
