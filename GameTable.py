@@ -55,9 +55,9 @@ class GameTable:
                     self.matrix[i][j].value = "O"
                 else:
                     self.matrix[i][j].value = " "
-                if (i == 2 and j == 2) or (i == 2 and j == 9):
+                if (i == self.player_one.x1 - 1 and j == self.player_one.x2 - 1) or (i == self.player_one.y1 - 1 and j == self.player_one.y2 - 1):
                     self.matrix[i][j].value = "\033[0;30;47mX\033[0;0m"
-                if (i == 6 and j == 2) or (i == 6 and j == 9):
+                if (i == self.player_two.x1 - 1 and j == self.player_two.x2 - 1) or (i == self.player_two.y1 - 1 and j == self.player_two.y2 - 1):
                     self.matrix[i][j].value = "\033[0;37;40mO\033[0;0m"
 
     def make_move(self, move):

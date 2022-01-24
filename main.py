@@ -50,8 +50,16 @@ class Main:
     def __init__(self):
         self.m = 0
         self.n = 0
-        self.player_one = Player(self.m, self.n, "black")
-        self.player_two = Player(self.m, self.n, "white")
+        self.x1 = 0
+        self.x2 = 0
+        self.y1 = 0
+        self.y2 = 0
+        self.xf1 = 0
+        self.xf2 = 0
+        self.yf1 = 0
+        self.yf2 = 0
+        self.player_one = Player(self.m, self.n, "black",0,0,0,0)
+        self.player_two = Player(self.m, self.n, "white",0,0,0,0)
         self.table = GameTable(self.m, self.n, self.player_one, self.player_two)
         self.graph = Graph(self.table)
         self.possible_moves_one = []
@@ -60,8 +68,16 @@ class Main:
     def starting_state(self):
         self.m = int(input("Enter the number of rows: "))
         self.n = int(input("Enter the number of columns: "))
-        self.player_one = Player(self.m, self.n, "black")
-        self.player_two = Player(self.m, self.n, "white")
+        self.x1 = int(input("Enter coordinate for first pawn for player one"))
+        self.x2 = int(input())
+        self.y1 = int(input("Enter coordinate for second pawn for player one"))
+        self.y2 = int(input())
+        self.player_one = Player(self.m, self.n, "black", self.x1, self.x2, self.y1, self.y2)
+        self.xf1 = int(input("Enter coordinate for first pawn for player two"))
+        self.xf2 = int(input())
+        self.yf1 = int(input("Enter coordinate for second pawn for player two"))
+        self.yf2 = int(input())
+        self.player_two = Player(self.m, self.n, "white", self.xf1, self.xf2, self.yf1, self.yf2)
         self.table = GameTable(self.m, self.n, self.player_one, self.player_two)
         self.graph = Graph(self.table)
 
@@ -139,19 +155,19 @@ class Main:
         self.graph = Graph(self.table)
         if player.player_color == "black":
             if (self.graph.is_there_path([player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1],
-                                         [7, 3]) is True and self.graph.is_there_path(
-                [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], [7, 3]) is True) and \
+                                         [self.xf1, self.xf2]) is True and self.graph.is_there_path(
+                [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], [self.xf1, self.xf2]) is True) and \
                     (self.graph.is_there_path([player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1],
-                                              [7, 10]) is True and self.graph.is_there_path(
-                        [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], [7, 10]) is True):
+                                              [self.yf1, self.yf2]) is True and self.graph.is_there_path(
+                        [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], [self.yf1, self.yf2]) is True):
                 is_valid = True
         else:
             if (self.graph.is_there_path([player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1],
-                                         [3, 3]) is True and self.graph.is_there_path(
-                [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], [3, 3]) is True) and \
+                                         [self.x1, self.x2]) is True and self.graph.is_there_path(
+                [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], [self.x1, self.x2]) is True) and \
                     (self.graph.is_there_path([player.pawn_one_position[0] - 1, player.pawn_one_position[1] - 1],
-                                              [3, 10]) is True and self.graph.is_there_path(
-                        [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], [3, 10]) is True):
+                                              [self.y1, self.y2]) is True and self.graph.is_there_path(
+                        [player.pawn_two_position[0] - 1, player.pawn_two_position[1] - 1], [self.y1, self.y2]) is True):
                 is_valid = True
         # ponistavanje zida
         if wall_color == 'B':
